@@ -38,11 +38,12 @@ import SwipeCards from 'react-native-swipe-cards';
 
 let Card = React.createClass({
   render() {
-    const { category } = this.props;
+    const { category, score } = this.props;
     return (
       <View style={styles.card}>
         <Image style={styles.thumbnail} source={{uri: this.props.link}} />
         <Text style={styles.text}>{`${category}`}?</Text>
+        <Text style={styles.text}>Score: {`${score}`}</Text>
       </View>
     )
   }
