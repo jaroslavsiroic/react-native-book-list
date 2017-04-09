@@ -155,6 +155,7 @@ export default React.createClass({
         showYup={true}
         showNope={true}
         stack={true}
+        smoothTransition={true}
 
         handleYup={this.handleYup}
         handleNope={this.handleNope}
