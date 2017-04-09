@@ -22,8 +22,26 @@ class List extends Component {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(['hipster', 'banker', 'gangster', 'squatting_slav', 'stoner', 'vegan'])
+      dataSource: ds.cloneWithRows([])
     };
+    // ['hipster', 'banker', 'gangster', 'squatting_slav', 'stoner', 'vegan']
+  }
+
+  componentWillMount() {
+    fetch('https://tinder-for-dataset-maxleaf.c9users.io/categories')
+      .then((response) => {
+          if (response.status >= 400) {
+              console.log(response);
+          }
+          try {
+              return response.json();
+          } catch(e) {
+              console.log(e);
+          }
+      })
+      .then((data) => {
+          this.setState({dataSource: this.state.dataSource.cloneWithRows(data)})
+      });
   }
 
   render() {

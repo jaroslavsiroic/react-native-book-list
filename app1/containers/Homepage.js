@@ -154,6 +154,7 @@ export default React.createClass({
         renderNoMoreCards={() => <NoMoreCards />}
         showYup={true}
         showNope={true}
+        stack={true}
 
         handleYup={this.handleYup}
         handleNope={this.handleNope}
