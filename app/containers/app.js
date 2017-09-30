@@ -7,9 +7,8 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import reducers from '../reducers';
-import Homepage from './Homepage';
-import BookView from './BookView';
-import AddBook from './AddBook';
+import Swiper from './Swiper';
+import List from './List';
 
 const store = createStore(
   reducers,
@@ -19,15 +18,12 @@ const store = createStore(
     autoRehydrate()
   )
 );
-
+const AppNavigation = StackNavigator({
+  Home: { screen: List },
+  Swiper: { screen: Swiper },
+});
 // begin periodically persisting the store
 persistStore(store, {storage: AsyncStorage})
-
-const AppNavigation = StackNavigator({
-  Home: { screen: Homepage },
-  BookView: { screen: BookView },
-  AddBook: { screen: AddBook }
-});
 
 export default class App extends Component {
   render() {
