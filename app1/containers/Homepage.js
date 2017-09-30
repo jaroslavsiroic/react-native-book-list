@@ -7,6 +7,7 @@ import BookItem from '../components/BookItem';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
 
+import Cards from '../links_celebrity.json';
 import SwipeCards from 'react-native-swipe-cards';
 
 // class Homepage extends Component {
@@ -38,11 +39,10 @@ import SwipeCards from 'react-native-swipe-cards';
 
 let Card = React.createClass({
   render() {
-    const { category, score } = this.props;
+    const { score } = this.props;
     return (
       <View style={styles.card}>
         <Image style={styles.thumbnail} source={{uri: this.props.link}} />
-        <Text style={styles.text}>{`${category}`}?</Text>
         <Text style={styles.text}>Score: {`${score}`}</Text>
       </View>
     )
@@ -59,7 +59,6 @@ let NoMoreCards = React.createClass({
   }
 })
 
-// const Cards = [
 //   {name: '1', image: 'http://i.telegraph.co.uk/multimedia/archive/03046/hipster-tash_3046941b.jpg'},
 //   {name: '2', image: 'http://www.sickchirpse.com/wp-content/uploads/2016/08/Hipster-1.jpg'},
 //   {name: '3', image: 'http://media.giphy.com/media/LkLL0HJerdXMI/giphy.gif'},
@@ -79,29 +78,30 @@ export default React.createClass({
     }
   },
   componentWillMount () {
-    const { category } = this.props.navigation.state.params;
-    fetch('https://tinder-for-dataset-maxleaf.c9users.io/data?category='+category)
-      .then((response) => {
-          if (response.status >= 400) {
-              console.log(response);
-          }
-          try {
-              return response.json();
-          } catch(e) {
-              console.log(e);
-          }
-      })
-      .then((data) => {
-          this.setState({cards: this.shuffle(data)})
-      });
+    this.setState({cards: this.shuffle(Cards)})
+    // const { category } = this.props.navigation.state.params;
+    // fetch('https://tinder-for-dataset-maxleaf.c9users.io/data?category='+category)
+    //   .then((response) => {
+    //       if (response.status >= 400) {
+    //           console.log(response);
+    //       }
+    //       try {
+    //           return response.json();
+    //       } catch(e) {
+    //           console.log(e);
+    //       }
+    //   })
+    //   .then((data) => {
+    //       this.setState({cards: this.shuffle(data)})
+    //   });
   },
   handleYup (card) {
-    const { category } = this.props.navigation.state.params;
-    this.sendReq({id: card.id, isHipster: true, category: category})
+    // const { category } = this.props.navigation.state.params;
+    // this.sendReq({id: card.id, isHipster: true, category: category})
   },
   handleNope (card) {
-    const { category } = this.props.navigation.state.params;
-    this.sendReq({id: card.id, isHipster: false, category: category})
+    // const { category } = this.props.navigation.state.params;
+    // this.sendReq({id: card.id, isHipster: false, category: category})
   },
   sendReq (data) {
     const { category } = this.props.navigation.state.params;
@@ -144,13 +144,12 @@ export default React.createClass({
     return a;
   },
   render() {
-    const { category } = this.props.navigation.state.params;
     return (
       <SwipeCards
         cards={this.state.cards}
         loop={false}
 
-        renderCard={(cardData) => <Card {...cardData} category={category} />}
+        renderCard={(cardData) => <Card {...cardData} />}
         renderNoMoreCards={() => <NoMoreCards />}
         showYup={true}
         showNope={true}

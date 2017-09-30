@@ -27,10 +27,11 @@ persistStore(store, {storage: AsyncStorage})
 
 export default class App extends Component {
   render() {
-    return (
-      <Provider store={store}>
-        <AppNavigation />
-      </Provider>
-    );
+    // return (
+    //   <Provider store={store}>
+    //     <AppNavigation />
+    //   </Provider>
+    // );
+    return <Homepage/>;
   }
 }
