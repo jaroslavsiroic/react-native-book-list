@@ -2,73 +2,54 @@
 
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import BookItem from '../components/BookItem';
-import Button from '../components/Button';
 import { connect } from 'react-redux';
+import SwipeCards from 'react-native-swipe-cards';
+import Card from '../components/Card';
+import NoMoreCards from '../components/NoMoreCards';
+import { addImage } from '../actions/imageDataActions';
+import { getFromPixaBay } from '../actions/fetchActions';
 
 import Cards from '../links_celebrity.json';
-import SwipeCards from 'react-native-swipe-cards';
 
-const Card = React.createClass({
-  render() {
-    const { score } = this.props;
-    return (
-      <View style={styles.card}>
-        <Image style={styles.thumbnail} source={{uri: this.props.link}} />
-        <Text style={styles.text}>Score: {`${score}`}</Text>
-      </View>
-    )
+class Swiper extends Component {
+  static navigationOptions = {
+    title: 'Swiper',
+  };
+
+  constructor(props) {
+    super(props);
+    this.handleYup = this.handleYup.bind(this);
+    this.handleNope = this.handleNope.bind(this);
+    this.shuffle = this.shuffle.bind(this);
+    this.cardRemoved = this.cardRemoved.bind(this);
   }
-})
 
-const NoMoreCards = React.createClass({
-  render() {
-    return (
-      <View style={styles.noMoreCards}>
-        <Text>No more cards</Text>
-      </View>
-    )
-  }
-})
-
-export default React.createClass({
-  getInitialState() {
-    return {
-      cards: [],
-      outOfCards: false
-    }
-  },
   componentWillMount () {
-    this.setState({cards: this.shuffle(Cards)})
-  },
+    this.props.getFromPixaBay(); // error here
+    // console.log(this.props);
+  }
+
   handleYup (card) {
+  }
 
-  },
   handleNope (card) {
+  }
 
-  },
   cardRemoved (index) {
-    console.log(`The index is ${index}`);
+  }
 
-    let CARD_REFRESH_LIMIT = 3
-
-    if (this.state.cards.length - index <= CARD_REFRESH_LIMIT + 1) {
-      console.log(`There are only ${this.state.cards.length - index - 1} cards left.`);
-    }
-
-  },
   shuffle(a) {
     for (let i = a.length; i; i--) {
         let j = Math.floor(Math.random() * i);
         [a[i - 1], a[j]] = [a[j], a[i - 1]];
     }
     return a;
-  },
+  }
+
   render() {
     return (
       <SwipeCards
-        cards={this.state.cards}
+        cards={this.props.images}
         loop={false}
 
         renderCard={(cardData) => <Card {...cardData} />}
@@ -81,32 +62,15 @@ export default React.createClass({
         handleYup={this.handleYup}
         handleNope={this.handleNope}
         cardRemoved={this.cardRemoved} />
-    )
+    );
   }
-})
+}
 
-const styles = StyleSheet.create({
-  card: {
-    alignItems: 'center',
-    borderRadius: 5,
-    overflow: 'hidden',
-    borderColor: 'grey',
-    backgroundColor: 'white',
-    borderWidth: 1,
-    elevation: 1,
-  },
-  thumbnail: {
-    width: 300,
-    height: 300,
-  },
-  text: {
-    fontSize: 20,
-    paddingTop: 10,
-    paddingBottom: 10
-  },
-  noMoreCards: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-})
+module.exports = connect(state => ({
+    images: state.communication.image_cache
+}),(dispatch) => bindActionCreators({
+      addImage: addImage,
+      getFromPixaBay: getFromPixaBay
+}))(Swiper);
+
+

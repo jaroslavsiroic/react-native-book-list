@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import image_reducer from './images';
+import image_reducer from './image_cache';
 
 module.exports = combineReducers({
-    images: image_reducer
+    image_cache: image_reducer
 });

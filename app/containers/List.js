@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { View, Text, ListView, TouchableOpacity, StyleSheet } from 'react-native';
-import BookItem from '../components/BookItem';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
 
@@ -16,7 +15,7 @@ const style = StyleSheet.create({
 
 class List extends Component {
   static navigationOptions = {
-    title: 'List',
+    title: 'FavList',
   }
   constructor(props) {
     super(props);
@@ -24,24 +23,6 @@ class List extends Component {
     this.state = {
       dataSource: ds.cloneWithRows([])
     };
-    // ['hipster', 'banker', 'gangster', 'squatting_slav', 'stoner', 'vegan']
-  }
-
-  componentWillMount() {
-    fetch('https://tinder-for-dataset-maxleaf.c9users.io/categories')
-      .then((response) => {
-          if (response.status >= 400) {
-              console.log(response);
-          }
-          try {
-              return response.json();
-          } catch(e) {
-              console.log(e);
-          }
-      })
-      .then((data) => {
-          this.setState({dataSource: this.state.dataSource.cloneWithRows(data)})
-      });
   }
 
   render() {
@@ -53,9 +34,9 @@ class List extends Component {
           dataSource={this.state.dataSource}
           renderRow={(data) => {
             return (
-              <TouchableOpacity style={style.item} onPress={()=> navigate('Cards', {category: data})}>
-                <Text style={{fontSize: 20, margin: 10}}>{data}</Text>
-              </TouchableOpacity>)
+              <View style={style.item}>
+                <Image style={{width: 300, height: 300}} />
+              </View>)
           }} />
       </View>
     );
