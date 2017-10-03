@@ -9,8 +9,6 @@ import NoMoreCards from '../components/NoMoreCards';
 import { addImage } from '../actions/imageDataActions';
 import { getFromPixaBay } from '../actions/fetchActions';
 
-import Cards from '../links_celebrity.json';
-
 class Swiper extends Component {
   static navigationOptions = {
     title: 'Swiper',
@@ -25,8 +23,7 @@ class Swiper extends Component {
   }
 
   componentWillMount () {
-    this.props.getFromPixaBay(); // error here
-    // console.log(this.props);
+    this.props.getFromPixaBay('red flowers');
   }
 
   handleYup (card) {
@@ -71,6 +68,6 @@ module.exports = connect(state => ({
 }),(dispatch) => bindActionCreators({
       addImage: addImage,
       getFromPixaBay: getFromPixaBay
-}))(Swiper);
+}, dispatch))(Swiper);
 
 

@@ -17,6 +17,7 @@ class List extends Component {
   static navigationOptions = {
     title: 'FavList',
   }
+
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -25,10 +26,22 @@ class List extends Component {
     };
   }
 
+  componentWillMount() {
+
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(props.images)
+    });
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Input here</Text>
+        <Button text='Search' onClick={() => navigate('Swiper', {input: 'blue sky'})} />
         <ListView
           style={{width: 350}}
           dataSource={this.state.dataSource}

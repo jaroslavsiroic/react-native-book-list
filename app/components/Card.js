@@ -25,11 +25,11 @@ const style = StyleSheet.create({
 class Card extends Component {
 
   render() {
-    const { score } = this.props;
+    const { likes, webformatURL, favorites } = this.props;
     return (
       <View style={style.card}>
-        <Image style={style.thumbnail} source={{uri: this.props.link}} />
-        <Text style={style.text}>Score: {`${score}`}</Text>
+        <Image style={style.thumbnail} source={{uri: webformatURL}} />
+        <Text style={style.text}>{`Likes: ${likes} Fav: ${favorites}`}</Text>
       </View>
     );
   }
